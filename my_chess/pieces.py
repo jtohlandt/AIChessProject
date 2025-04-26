@@ -35,42 +35,8 @@ def pawn_white_validate(move, myGame,verifying):
         return False
     #if move is two spaces forward
     if verifying == False:
-        if inital[1] == final[1] and final[0] - inital[0] == 2:
+        if inital[1] == final[1] and inital[0] - final[0] == 2:
             #check if piece is in valid row
-            if inital[0] == 3:
-                #check if there is a piece in the way
-                if myBoard.get_piece((inital[0] + 1, inital[1])) != "0" or myBoard.get_piece((inital[0] + 2, inital[1])) != "0":
-                    return False
-                return True
-            return False
-    #if move is one space forward
-    if verifying == False:
-        if inital[1] == final[1] and final[0] - inital[0] == 1:
-            if myBoard.get_piece((final[0], final[1])) == "0":
-                return True
-    #check en passant
-    if verifying == False:
-        if inital[0] == 6 and final[0] == 7 and abs(inital[1] - final[1]) == 1:
-            if myBoard.get_piece((inital[0], final[1])) == "p" and myGame.black_valid_en_passant == (True,final[1]):
-                return True
-    
-    #if move is diagonal CHECK
-    if abs(inital[1] - final[1]) == 1 and final[0] - inital[0] == 1:
-        if verifying == True:
-            return True
-        if myBoard.get_piece((final[0], final[1])).islower():
-            return True
-    return False
-def pawn_black_validate(move, myGame,verifying):
-    myBoard = myGame.board
-    inital = move[0]
-    final = move[1]
-    #check if final doesn't have it's own players piece
-    if verify_own_piece(move, myBoard) == False:
-        return False
-    #if move is two spaces forward
-    if verifying == False:
-        if inital[1] == final[1] and inital[0]-final[0] == 2:
             if inital[0] == 8:
                 #check if there is a piece in the way
                 if myBoard.get_piece((inital[0] - 1, inital[1])) != "0" or myBoard.get_piece((inital[0] - 2, inital[1])) != "0":
@@ -85,13 +51,47 @@ def pawn_black_validate(move, myGame,verifying):
     #check en passant
     if verifying == False:
         if inital[0] == 5 and final[0] == 4 and abs(inital[1] - final[1]) == 1:
-            if myBoard.get_piece((inital[0], final[1])) == "P" and myGame.white_valid_en_passant == (True,final[1]):
+            if myBoard.get_piece((inital[0], final[1])) == "p" and myGame.black_valid_en_passant == (True,final[1]):
                 return True
+    
     #if move is diagonal CHECK
     if abs(inital[1] - final[1]) == 1 and inital[0] - final[0] == 1:
         if verifying == True:
             return True
         if myBoard.get_piece((final[0], final[1])).islower():
+            return True
+    return False
+def pawn_black_validate(move, myGame,verifying):
+    myBoard = myGame.board
+    inital = move[0]
+    final = move[1]
+    #check if final doesn't have it's own players piece
+    if verify_own_piece(move, myBoard) == False:
+        return False
+    #if move is two spaces forward
+    if verifying == False:
+        if inital[1] == final[1] and final[0]-inital[0] == 2:
+            if inital[0] == 3:
+                #check if there is a piece in the way
+                if myBoard.get_piece((inital[0] + 1, inital[1])) != "0" or myBoard.get_piece((inital[0] + 2, inital[1])) != "0":
+                    return False
+                return True
+            return False
+    #if move is one space forward
+    if verifying == False:
+        if inital[1] == final[1] and final[0] - inital[0] == 1:
+            if myBoard.get_piece((final[0], final[1])) == "0":
+                return True
+    #check en passant
+    if verifying == False:
+        if inital[0] == 6 and final[0] == 7 and abs(inital[1] - final[1]) == 1:
+            if myBoard.get_piece((inital[0], final[1])) == "P" and myGame.white_valid_en_passant == (True,final[1]):
+                return True
+    #if move is diagonal CHECK
+    if abs(inital[1] - final[1]) == 1 and final[0] - inital[0] == 1:
+        if verifying == True:
+            return True
+        if myBoard.get_piece((final[0], final[1])).isupper():
             return True
     return False
 def rook_validate(move, myBoard):
@@ -189,50 +189,50 @@ def king_validate(move, myGame,verifying):
             return False
     #check for castling
     if turn == "white":
-        if inital[0] == 2 and inital[1] == 6:
-            if final[0] == 2 and final[1] == 4:
+        if inital[0] == 9 and inital[1] == 6:
+            if final[0] == 9 and final[1] == 4:
                 if can_piece_be_captured(inital, myGame,"lower") == True:
                     #print("Cannot castle while in check")
                     return False
-                if can_piece_be_captured((2,5), myGame,"lower") == True:
+                if can_piece_be_captured((9,5), myGame,"lower") == True:
                     #print("Cannot castle through in check")
                     return False
-                if myBoard.get_piece((2, 5)) == "0" and myBoard.get_piece((2, 4)) == "0" and myBoard.get_piece((2, 3)) == "0" and myBoard.get_piece((2, 2)) == "R":
+                if myBoard.get_piece((9, 5)) == "0" and myBoard.get_piece((9, 4)) == "0" and myBoard.get_piece((9, 3)) == "0" and myBoard.get_piece((9, 2)) == "R":
                     if myGame.white_valid_castling == True and myGame.upper_left_rook_moved == -1:
                         return True
                 return False
-            if final[0] == 2 and final[1] == 8:
+            if final[0] == 9 and final[1] == 8:
                 if can_piece_be_captured(inital, myGame,"lower") == True:
                     #print("Cannot castle while in check")
                     return False
-                if can_piece_be_captured((2,7), myGame,"lower") == True:
+                if can_piece_be_captured((9,7), myGame,"lower") == True:
                     #print("Cannot castle through in check")
                     return False
-                if myBoard.get_piece((2, 7)) == "0" and myBoard.get_piece((2, 8)) == "0" and myBoard.get_piece((2, 9)) == "R":
+                if myBoard.get_piece((9, 7)) == "0" and myBoard.get_piece((9, 8)) == "0" and myBoard.get_piece((9, 9)) == "R":
                     if myGame.white_valid_castling == True and myGame.upper_right_rook_moved == -1:
                         return True
                 return False
     if turn == "black":
-        if inital[0] == 9 and inital[1] == 6:
-            if final[0] == 9 and final[1] == 4:
+        if inital[0] == 2 and inital[1] == 6:
+            if final[0] == 2 and final[1] == 4:
                 if can_piece_be_captured(inital, myGame,"Upper") == True:
                     #print("Cannot castle while in check")
                     return False
-                if can_piece_be_captured((9,5), myGame,"Upper") == True:
+                if can_piece_be_captured((2,5), myGame,"Upper") == True:
                     #print("Cannot castle through in check")
                     return False
-                if myBoard.get_piece((9, 5)) == "0" and myBoard.get_piece((9, 4)) == "0" and myBoard.get_piece((9, 3)) == "0" and myBoard.get_piece((9, 2)) == "r":
+                if myBoard.get_piece((2, 5)) == "0" and myBoard.get_piece((2, 4)) == "0" and myBoard.get_piece((2, 3)) == "0" and myBoard.get_piece((2, 2)) == "r":
                     if myGame.black_valid_castling == True and myGame.lower_left_rook_moved == -1:
                         return True
                 return False
-            if final[0] == 9 and final[1] == 8:
+            if final[0] == 2 and final[1] == 8:
                 if can_piece_be_captured(inital, myGame,"Upper") == True:
                     #print("Cannot castle while in check")
                     return False
-                if can_piece_be_captured((9,7), myGame,"Upper") == True:
+                if can_piece_be_captured((2,7), myGame,"Upper") == True:
                     #print("Cannot castle through in check")
                     return False
-                if myBoard.get_piece((9, 7)) == "0" and myBoard.get_piece((9, 8)) == "0" and myBoard.get_piece((9, 9)) == "r":
+                if myBoard.get_piece((2, 7)) == "0" and myBoard.get_piece((2, 8)) == "0" and myBoard.get_piece((2, 9)) == "r":
                     if myGame.black_valid_castling == True and myGame.lower_right_rook_moved == -1:
                         return True
                 return False

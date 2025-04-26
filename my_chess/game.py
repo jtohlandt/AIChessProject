@@ -15,8 +15,8 @@ class game:
         self.turn = "white"
         self.white_valid_castling = True
         self.black_valid_castling = True
-        self.white_king_coordinates = (2,6)
-        self.black_king_coordinates = (9,6)
+        self.white_king_coordinates = (9,6)
+        self.black_king_coordinates = (2,6)
         self.upper_left_rook_moved = -1
         self.upper_right_rook_moved = -1
         self.lower_left_rook_moved = -1

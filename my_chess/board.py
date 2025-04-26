@@ -11,49 +11,13 @@ class board:
         for i in range(2,10):
             self.board[i][0] = 8-i + 2
             self.board[i][11] = 8-i +2 
-        #2 player demo
-        '''
-        self.board[2] = ["8","|","R", "N", "B", "Q", "K", "B", "N", "R", "|","8"]
-        self.board[9] = ["1","|","r", "n", "b", "q", "k", "b", "n", "r","|","1"]
-        for i in range(2,10):
-            self.board[3][i] = "P"
-        for i in range(2,10):
-            self.board[8][i] = "p"
-        '''
-        #pawn promotion demo
-        '''
-        self.board[2] = ["8","|","R", "N", "B", "Q", "K", "B", "N", "R", "|","8"]
-        self.board[9] = ["1","|","0", "n", "b", "q", "k", "b", "n", "r","|","1"]
-        for i in range(3,10):
-            self.board[3][i] = "P"
-        for i in range(3,10):
-            self.board[8][i] = "p"
-        self.board[8][2] = "P"
-        '''
-        #castling demo
-        '''
-        self.board[2] = ["8","|","R", "0", "0", "0", "K", "B", "N", "R", "|","8"]
-        self.board[9] = ["1","|","r", "n", "b", "q", "k", "b", "n", "r","|","1"]
-        for i in range(2,10):
-            self.board[3][i] = "P"
-        for i in range(2,10):
-            self.board[8][i] = "p"
-        '''
         
-        #AI avoiding check demo
-        self.board[2] = ["8","|","R", "N", "B", "Q", "K", "Q", "N", "R", "|","8"]
-        self.board[9] = ["1","|","0", "0", "0", "0", "k", "0", "0", "0","|","1"]
-        
-        #AI capturing piece demo
-        '''
-        self.board[2] = ["8","|","R", "N", "B", "Q", "K", "B", "Q", "R", "|","8"]
-        self.board[9] = ["1","|","r", "n", "b", "q", "k", "b", "n", "r","|","1"]
+        self.board[2] = ["8","|","r", "n", "b", "q", "k", "b", "n", "r", "|","8"]
+        self.board[9] = ["1","|","R", "N", "B", "Q", "K", "B", "N", "R","|","1"]
         for i in range(2,10):
-            self.board[3][i] = "P"
+            self.board[3][i] = "p"
         for i in range(2,10):
-            self.board[8][i] = "p"
-        self.board[3][8] = "0"
-        '''
+            self.board[8][i] = "P"
             
     def print_board(self):
         for i in range(12):

@@ -69,13 +69,13 @@ def make_move(move, myGame):
     piece = myGame.board.get_piece(move[0])
     captured_piece = myGame.board.get_piece(move[1])
     #update if en passant is valid
-    if inital[1] == final[1] and inital[0]-final[0] == 2:
+    if inital[1] == final[1] and abs(inital[0]-final[0]) == 2:
         if piece == "P":
             myGame.white_valid_en_passant = (True, final[1])
         if piece == "p":
             myGame.black_valid_en_passant = (True, final[1])
     #for en passant - white
-    if inital[0] == 6 and final[0] == 7 and abs(inital[1] - final[1]) == 1 and piece == "P":
+    if inital[0] == 5 and final[0] == 4 and abs(inital[1] - final[1]) == 1 and piece == "P":
         if myBoard.get_piece((inital[0], final[1])) == "p" and myGame.black_valid_en_passant == (True,final[1]):
             myBoard.board[inital[0]][final[1]] = "0"
             myGame.board.board[move[0][0]][move[0][1]] = "0"
@@ -89,7 +89,7 @@ def make_move(move, myGame):
             myGame.turn = "black" if myGame.turn == "white" else "white"
             return
     #for en passant - black
-    if inital[0] == 5 and final[0] == 4 and abs(inital[1] - final[1]) == 1 and piece == "p":
+    if inital[0] == 6 and final[0] == 7 and abs(inital[1] - final[1]) == 1 and piece == "p":
         if myBoard.get_piece((inital[0], final[1])) == "P" and myGame.white_valid_en_passant == (True,final[1]):
             myBoard.board[inital[0]][final[1]] = "0"
             myGame.board.board[move[0][0]][move[0][1]] = "0"
@@ -103,7 +103,7 @@ def make_move(move, myGame):
             myGame.turn = "black" if myGame.turn == "white" else "white"
             return
     #for pawn replacement
-    if final[0] == 9 and piece == "P":
+    if final[0] == 2 and piece == "P":
         loop = True
         while loop:
             pawn_replacement = input("Enter the piece you want to promote to (Q, R, B, N): ")
@@ -121,7 +121,7 @@ def make_move(move, myGame):
         myGame.previous_turn = (inital,final,captured_piece)
         myGame.turn = "black" if myGame.turn == "white" else "white"
         return
-    if final[0] == 2 and piece == "p":
+    if final[0] == 9 and piece == "p":
         if myGame.mode == "AI":
             print("AI pawn promotion")
             myBoard.board[2][final[1]] = "Q"
@@ -147,44 +147,44 @@ def make_move(move, myGame):
     #For king moves
     if myGame.turn == "white":
         if piece == "K":
-            if inital[0] == 2 and inital[1] == 6:
-                if final[0] == 2 and final[1] == 4:
+            if inital[0] == 9 and inital[1] == 6:
+                if final[0] == 9 and final[1] == 4:
                     myGame.upper_left_rook_moved = myGame.turn_num
-                    myBoard.board[2][2] = "0"
-                    myBoard.board[2][5] = "R"
-                if final[0] == 2 and final[1] == 8:
+                    myBoard.board[9][2] = "0"
+                    myBoard.board[9][5] = "R"
+                if final[0] == 9 and final[1] == 8:
                     myGame.upper_right_rook_moved = myGame.turn_num
-                    myBoard.board[2][9] = "0"
-                    myBoard.board[2][7] = "R"
+                    myBoard.board[9][9] = "0"
+                    myBoard.board[9][7] = "R"
             #update king status if being moved
             myGame.white_valid_castling = False
             #print("White king moved")
             #print("White king coordinates: {final}".format(final=final))
             myGame.white_king_coordinates = final
         if piece == "R":
-            if inital[0] == 2 and inital[1] == 2 and myGame.upper_left_rook_moved == -1:
+            if inital[0] == 9 and inital[1] == 2 and myGame.upper_left_rook_moved == -1:
                 myGame.upper_left_rook_moved = myGame.turn_num
-            if inital[0] == 2 and inital[1] == 9 and myGame.upper_right_rook_moved == -1:
+            if inital[0] == 9 and inital[1] == 9 and myGame.upper_right_rook_moved == -1:
                 myGame.upper_right_rook_moved = myGame.turn_num
     if myGame.turn == "black":
         if piece == "k":
-            if inital[0] == 9 and inital[1] == 6:
-                if final[0] == 9 and final[1] == 4:
+            if inital[0] == 2 and inital[1] == 6:
+                if final[0] == 2 and final[1] == 4:
                     myGame.lower_left_rook_moved = myGame.turn_num
-                    myBoard.board[9][2] = "0"
-                    myBoard.board[9][5] = "r"
-                if final[0] == 9 and final[1] == 8:
+                    myBoard.board[2][2] = "0"
+                    myBoard.board[2][5] = "r"
+                if final[0] == 2 and final[1] == 8:
                     myGame.lower_right_rook_moved = myGame.turn_num
-                    myBoard.board[9][9] = "0"
-                    myBoard.board[9][7] = "r"
+                    myBoard.board[2][9] = "0"
+                    myBoard.board[2][7] = "r"
             #update king status if being moved
             myGame.black_valid_castling = False
             myGame.black_king_coordinates = final
             #update rook status if being moved
         if piece == "r":
-            if inital[0] == 9 and inital[1] == 2 and myGame.lower_left_rook_moved == -1:
+            if inital[0] == 2 and inital[1] == 2 and myGame.lower_left_rook_moved == -1:
                 myGame.lower_left_rook_moved = myGame.turn_num
-            if inital[0] == 9 and inital[1] == 9 and myGame.lower_right_rook_moved == -1:
+            if inital[0] == 2 and inital[1] == 9 and myGame.lower_right_rook_moved == -1:
                 myGame.lower_right_rook_moved = myGame.turn_num
     #print("Moving {piece} from {move[0]} to {move[1]}".format(piece=piece, move=move))
     myGame.board.board[move[0][0]][move[0][1]] = "0"
@@ -214,19 +214,18 @@ def undo_move(myGame):
     if abs(previous_turn_inital[1] - previous_turn_final[1]) == 2:
         if moved_piece == "K":
             if previous_turn_final[1] == 4:
-                myBoard.board[2][2] = "R"
-                myBoard.board[2][5] = "0"
+                myBoard.board[9][2] = "R"
+                myBoard.board[9][5] = "0"
             if previous_turn_final[1] == 8:
-                myBoard.board[2][9] = "R"
-                myBoard.board[2][7] = "0"
+                myBoard.board[9][9] = "R"
+                myBoard.board[9][7] = "0"
         if moved_piece == "k":
             if previous_turn_final[1] == 4:
-                myBoard.board[9][2] = "r"
-                myBoard.board[9][5] = "0"
-                myGame.lower_left_rook_moved = -1
+                myBoard.board[2][2] = "r"
+                myBoard.board[2][5] = "0"
             if previous_turn_final[1] == 8:
-                myBoard.board[9][9] = "r"
-                myBoard.board[9][7] = "0"
+                myBoard.board[2][9] = "r"
+                myBoard.board[2][7] = "0"
     #if en passant
     if moved_piece == "P" or moved_piece == "p":
         if abs(previous_turn_inital[1] - previous_turn_final[1]) == 1: 
